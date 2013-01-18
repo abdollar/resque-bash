@@ -21,7 +21,7 @@ OPTIONS:
   -s      Set the server (default is localhost or settings based on RAILS_ENV and config/resque.yml
   -p      Server root port (default is 6379 or settings based on RAILS_ENV and config/resque.yml
   -q      Resque queue name (default is critical)
-  -c      Class name for the resque queue (default is ResqueRecipeKickoffWorker)
+  -c      Class name for the resque queue (default is critical)
   -a      Args for the class (default is current time in seconds)
 EOF
 }
