@@ -1,10 +1,21 @@
 Resque-bash
 ===========
 
-Bash scale pubhubsubbub - works across multiple machines using resque internals
+Bash scale pubhubsubbub - works across multiple machines using redis commands compatible with resque
 
 Create scalable background jobs and workers using just a single bash script.
 Drop this into your rails project or use this repo as is.
+
+Resque-bash supports the standard Resque frontend which tells you what various bash workers are doing.
+
+To start the resque front end
+
+  $ resque-web
+
+To stop the resque front end
+
+  $ resque-web --kill
+
 
 <a name='section_Contributing'></a>
 Contributing

@@ -7,6 +7,7 @@ FILE_PATH=$(cd `/usr/bin/dirname $0`; pwd -P)
 QUEUE="critical"
 CLASS="fetch"
 ARGS="$(/bin/date '+%s')"
+WORKER="$(/bin/hostname):$$:${QUEUE}"
 
 usage()
 {
@@ -69,3 +70,25 @@ fi
 /usr/local/bin/redis-cli -h $HOST -p $PORT SADD "${NAMESPACE}:queues" "${QUEUE}"
 /usr/local/bin/redis-cli -h $HOST -p $PORT RPUSH "${NAMESPACE}:queue:${QUEUE}" "{\"class\":\"${CLASS}\",\"args\":${ARGS}}"
 echo "Done."
+
+# value = Abduls-MacBook-Pro-2.local:91632:live_channel_batch,custom_mailer,date_and_time,mini_queue,pub_sub,async_work,instant
+/usr/local/bin/redis-cli -h $HOST -p $PORT SADD "${NAMESPACE}:workers" "${WORKER}"
+
+# working on this queue item?? CLASS should be same as above
+/usr/local/bin/redis-cli -h $HOST -p $PORT SET "${NAMESPACE}:worker:${WORKER}" "{\"queue\":\"${QUEUE}\",\"run_at\":\"${ARGS}\",\"payload\":\"${ARGS}\"}"
+
+# resque:worker:Abduls-MacBook-Pro-2.local:91632:live_channel_batch,custom_mailer,date_and_time,mini_queue,pub_sub,async_work,instant:started
+/usr/local/bin/redis-cli -h $HOST -p $PORT SET "${NAMESPACE}:worker:${WORKER}:started" "${ARGS}"
+#while true; do
+  sleep 30
+#done
+
+function on_exit()
+{
+  /usr/local/bin/redis-cli -h $HOST -p $PORT SREM "${NAMESPACE}:workers" "${WORKER}"
+  /usr/local/bin/redis-cli -h $HOST -p $PORT DEL "${NAMESPACE}:worker:${WORKER}" 
+  /usr/local/bin/redis-cli -h $HOST -p $PORT DEL "${NAMESPACE}:worker:${WORKER}:started" "${ARGS}"
+}
+
+trap on_exit EXIT
+
