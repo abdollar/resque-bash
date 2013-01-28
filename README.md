@@ -9,11 +9,11 @@ Drop this into your rails project or use this repo as is.
 
 Resque-bash supports the standard Resque web frontend which tells you what various bash workers are doing.
 
-To create a job 
+To create a job  (defaults to a queue called critical and submits a class called fetch with a value of the current time)
 
   $ ./script/resque-bash.sh -j
 
-To run the bash script as a worker and process jobs from a queue
+To run the bash script as a worker and process jobs from a queue (defaults to the queue called critical and echos the args)
 
   $ ./script/resque-bash -w
 
@@ -25,9 +25,9 @@ To stop the resque front end
 
   $ resque-web --kill
 
-Why did you I make this ? Should this exist at all? Rails can be slow to start and using bash to do quick ops-esque tasks is handy.
+Why did I make this and should this exist at all? Rails can be slow to start and using bash to do quick ops-esque tasks is handy.
 
-Note that this is calling redis-cli multiple times so it's starting and tearing down sockets constantly and is not performant, though redis can handle a lot of abuse
+Note that this is calling redis-cli multiple times so it's starting and tearing down sockets constantly and is not performant
 
 Your mileage will be bad with this tool, use it wisely.
 
