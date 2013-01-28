@@ -1,7 +1,7 @@
 Resque-bash
 ===========
 
-Uisng Bash to provide pubhubsubbub - works across multiple machines using redis commands and is designed to be compatible with resque
+Using Bash to provide pubhubsubbub - works across multiple machines using redis commands and is designed to be compatible with resque
 
 Create background jobs and workers using a bash script.
 
@@ -27,7 +27,7 @@ To stop the resque front end
 
 Why did I make this and should this exist at all? Rails can be slow to start and using bash to do quick ops-esque tasks is handy.
 
-Note that this is calling redis-cli multiple times so it's starting and tearing down sockets constantly and is not performant
+Note that this is calling redis-cli multiple times so it's starting and tearing down sockets constantly
 
 Your mileage will be bad with this tool, use it wisely.
 
